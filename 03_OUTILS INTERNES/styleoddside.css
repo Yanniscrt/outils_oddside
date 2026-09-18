@@ -1,0 +1,260 @@
+/* IMPORT POLICES */
+@font-face {
+    font-family: 'AboveBold';
+    src: url('Above Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'AvantGarde';
+    src: url('ITCAvantGardeStd-Bk.ttf') format('truetype');
+}
+
+:root {
+    /* COULEURS PRINCIPALES */
+    --racc-bg-dark: #000000;       /* Ton gris anthracite */
+    --racc-yellow: #ffffff;        /* Ton jaune "Gold" */
+    --racc-card-dark: #0B1215;     /* Fond de la carte (presque noir) */
+    --racc-white: #F4FFF9;         
+    --racc-red: #FE0000;           
+    
+    /* FILTRES POUR LES ICÔNES SVG */
+    /* Transforme le noir en Jaune #FFBE00 */
+    --filter-yellow: invert(72%) sepia(85%) saturate(1518%) hue-rotate(1deg) brightness(108%) contrast(105%);
+    /* Transforme le noir en Gris Anthracite #323232 */
+    --filter-dark-grey: invert(18%) sepia(0%) saturate(0%) hue-rotate(169deg) brightness(94%) contrast(91%);
+    
+    --filter-white: brightness(0) invert(1);
+    --filter-red: invert(13%) sepia(94%) saturate(7473%) hue-rotate(359deg) brightness(94%) contrast(116%);
+    /* Transforme le noir en Vert */
+    --filter-green: invert(48%) sepia(93%) saturate(1951%) hue-rotate(101deg) brightness(103%) contrast(107%);
+}
+
+/* BASE & STRUCTURE */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--racc-bg-dark); 
+    font-family: 'AvantGarde', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* FOND MESH GRADIENT ANIMÉ (GRIS & JAUNE) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--racc-bg-dark);
+    background-image: 
+        radial-gradient(at 0% 0%, var(--racc-bg-dark) 0px, transparent 50%),
+        radial-gradient(at 50% 0%, var(--racc-yellow) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, var(--racc-bg-dark) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, var(--racc-yellow) 0px, transparent 50%),
+        radial-gradient(at 100% 50%, var(--racc-bg-dark) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, var(--racc-bg-dark) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, var(--racc-yellow) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, var(--racc-bg-dark) 0px, transparent 50%);
+    background-size: 200% 200%;
+    animation: meshAnimation 6s ease-in-out infinite alternate;
+    filter: contrast(1.2) brightness(0.7);
+}
+
+/* EFFET DE GRAIN */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* CARTE PRINCIPALE */
+.card-container {
+    background-color: var(--racc-card-dark);
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    text-align: center;
+    color: var(--racc-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* HEADER & LOGO */
+.avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.name {
+    font-family: 'AboveBold', sans-serif;
+    font-size: 22px;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.location, .bio {
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 5px 0;
+}
+
+/* RÉSEAUX SOCIAUX (ICÔNES MODIFIÉES) */
+.social-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0 30px 0;
+}
+
+.social-grid img {
+    width: 24px;
+    height: 24px;
+    filter: var(--filter-white); /* Blanc de base */
+    transition: all 0.3s ease;
+}
+
+.social-grid a:hover img {
+    filter: var(--filter-red); /* Rouge au survol */
+}
+
+.social-grid a:active img {
+    filter: var(--filter-green); /* Vert au clic */
+    transform: scale(0.9);
+}
+
+/* SECTION DES LIENS */
+.links-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.link-item {
+    background: #111F24;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: var(--racc-white);
+    transition: background 0.3s ease;
+    min-height: 60px;
+}
+
+.link-item:hover {
+    background: #1B2E35;
+}
+
+.link-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+}
+
+/* MINIATURES (FOND JAUNE / ICÔNE ANTHRACITE) */
+.picto-box {
+    width: 40px;
+    height: 40px;
+    background-color: var(--racc-yellow);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.picto-box img {
+    width: 20px;
+    height: 20px;
+    filter: var(--filter-dark-grey); /* Icône en #323232 */
+    transition: filter 0.2s ease;
+}
+
+.link-item:active .picto-box img { 
+    filter: var(--filter-red); 
+}
+
+.link-title {
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.arrow {
+    font-size: 18px;
+    opacity: 0.5;
+    margin-left: 10px;
+}
+
+/* FOOTER */
+.footer-credits {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px; 
+}
+
+.footer-credits p {
+    font-size: 11px;
+    color: var(--racc-white);
+    opacity: 0.6;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.link-footer {
+    color: var(--racc-white);
+    text-decoration: underline;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.link-footer:hover { opacity: 1; }
+.link-footer:active { color: var(--racc-red); }
+
+/* ANIMATIONS & MEDIA QUERIES */
+@keyframes meshAnimation {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 100% 0%; }
+}
+
+@media (min-width: 768px) {
+    .card-container { padding: 40px; }
+    .avatar img { width: 180px; height: 180px; }
+    .name { font-size: 26px; }
+}
